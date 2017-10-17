@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.10
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLLibraryKontorsPrylarAB", "SQLLibraryKontorsPrylarAB\SQLLibraryKontorsPrylarAB.csproj", "{AC4431E4-A2C7-4892-BCF2-2AA37E592CC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KontorsPrylarAB", "KontorsPrylarAB\KontorsPrylarAB.csproj", "{D9511914-4E90-4B17-8FC8-A404B342FC98}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AC4431E4-A2C7-4892-BCF2-2AA37E592CC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC4431E4-A2C7-4892-BCF2-2AA37E592CC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC4431E4-A2C7-4892-BCF2-2AA37E592CC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC4431E4-A2C7-4892-BCF2-2AA37E592CC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9511914-4E90-4B17-8FC8-A404B342FC98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9511914-4E90-4B17-8FC8-A404B342FC98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9511914-4E90-4B17-8FC8-A404B342FC98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9511914-4E90-4B17-8FC8-A404B342FC98}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AB906FE1-E0E6-4D8A-B39D-0A1E4A02C511}
+	EndGlobalSection
+EndGlobal
