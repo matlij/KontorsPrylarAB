@@ -114,6 +114,46 @@ namespace SQLLibraryKontorsPrylarAB
             return customers;
         }
 
+        public ShoppingCart AddArticleToCart(int CID, int AID)
+        {
+            ShoppingCart newArticelToCart;
+            SqlCommand sqlCommand = new SqlCommand("AddToCart", sqlConnection);
+            sqlCommand.CommandType = CommandType.StoredProcedure;
+
+            SqlParameter paramCID = new SqlParameter("@cid", SqlDbType.Int);
+            paramCID.Value = CID;
+            sqlCommand.Parameters.Add(paramCID);
+
+            SqlParameter paramAID = new SqlParameter("@aid", SqlDbType.Int);
+            paramAID.Value = AID;
+            sqlCommand.Parameters.Add(paramAID);
+
+            SqlParameter paramID = new SqlParameter("@id", SqlDbType.Int);
+            paramID.Direction = ParameterDirection.Output;
+            sqlCommand.Parameters.Add(paramID);
+
+            try
+            {
+                sqlConnection.Open();
+
+                sqlCommand.ExecuteNonQuery();
+
+                int id = int.Parse(paramID.Value.ToString());
+
+                newArticelToCart = new ShoppingCart(id, CID, AID);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+
+            return newArticelToCart;
+        }
+
         public Article AddArticle(string articleName, string description, int price)
         {
             Article newArticle;
@@ -175,7 +215,7 @@ namespace SQLLibraryKontorsPrylarAB
                 sqlConnection.Open();
 
                 result = sqlCommand.ExecuteNonQuery();
-                
+
             }
             catch (Exception ex)
             {
@@ -215,7 +255,7 @@ namespace SQLLibraryKontorsPrylarAB
                 sqlConnection.Open();
 
                 sqlCommand.ExecuteNonQuery();
-                
+
             }
             catch (Exception ex)
             {
