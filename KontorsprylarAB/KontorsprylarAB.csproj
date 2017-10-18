@@ -69,6 +69,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="login.aspx" />
     <Content Include="Main.Master" />
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
@@ -104,6 +105,7 @@
     <Content Include="services\articleLiteral.aspx" />
     <Content Include="showArticle.aspx" />
     <Content Include="showCart.aspx" />
+    <Content Include="ShowCustomer.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -116,6 +118,13 @@
     </Compile>
     <Compile Include="index.aspx.designer.cs">
       <DependentUpon>index.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="login.aspx.cs">
+      <DependentUpon>login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="login.aspx.designer.cs">
+      <DependentUpon>login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Main.Master.cs">
       <DependentUpon>Main.Master</DependentUpon>
@@ -145,6 +154,13 @@
     </Compile>
     <Compile Include="showCart.aspx.designer.cs">
       <DependentUpon>showCart.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ShowCustomer.aspx.cs">
+      <DependentUpon>ShowCustomer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ShowCustomer.aspx.designer.cs">
+      <DependentUpon>ShowCustomer.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
