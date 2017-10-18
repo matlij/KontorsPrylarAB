@@ -21,5 +21,6 @@
     </table>
 
     <input id="loadButton" type="button" value="Visa artiklar" />
+    <input id="loggIn" type="button" value="Logga in/ut" />
 
 </asp:Content>

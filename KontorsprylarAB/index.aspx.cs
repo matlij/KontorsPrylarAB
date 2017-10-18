@@ -13,17 +13,7 @@ namespace KontorsprylarAB
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Request["action"] == "addToCart")
-            {
-                SQLStuff stuffSQL = new SQLStuff();
-                int aid = Convert.ToInt32(Request["aid"]);
 
-                //Kundnr är hårdkodat till ID 1, behöver ändras till kund som är inloggad
-                ShoppingCart articleToCart = stuffSQL.AddArticleToCart(1, aid);
-
-                LabelAddToCart.Text = $"Artikel med ID {articleToCart.AID1.ToString()} har lagts till i varukorgen";
-
-            }
         }
     }
 }

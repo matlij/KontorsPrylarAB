@@ -12,6 +12,53 @@ namespace SQLLibraryKontorsPrylarAB
     {
         SqlConnection sqlConnection = new SqlConnection(@"Data Source=.;Initial Catalog=KontorsprylarAB;Integrated Security=True");
 
+        public Customer ValidateUser(string userName, string password)
+        {
+            Customer customerloggedIn = null;
+
+            SqlCommand sqlCommand = new SqlCommand("select * from Customer where userName=@userName and password=@password", sqlConnection);
+
+            SqlParameter paramUserName = new SqlParameter("@userName", SqlDbType.VarChar);
+            paramUserName.Value = userName;
+            sqlCommand.Parameters.Add(paramUserName);
+
+            SqlParameter paramPassword = new SqlParameter("@password", SqlDbType.VarChar);
+            paramPassword.Value = password;
+            sqlCommand.Parameters.Add(paramPassword);
+
+            try
+            {
+                sqlConnection.Open();
+
+                SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+
+                if (sqlDataReader.HasRows)
+                {
+                    sqlDataReader.Read();
+                       
+                    int id = Convert.ToInt32(sqlDataReader["ID"]);
+                    userName = sqlDataReader["userName"].ToString();
+                    string email = sqlDataReader["email"].ToString();
+                    password = sqlDataReader["password"].ToString();
+                    string deliveryStreet = sqlDataReader["deliveryStreet"].ToString();
+                    string deliveryCity = sqlDataReader["deliveryCity"].ToString();
+
+                    customerloggedIn = new Customer(id, userName, email, password, deliveryCity, deliveryStreet);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+
+            return customerloggedIn;
+        }
+
         public List<Article> ReadAllArticles()
         {
             List<Article> articles = new List<Article>();
@@ -114,33 +161,28 @@ namespace SQLLibraryKontorsPrylarAB
             return customers;
         }
 
-        public ShoppingCart AddArticleToCart(int CID, int AID)
+        public int RemoveItemFromCart(int cid, int id)
         {
-            ShoppingCart newArticelToCart;
-            SqlCommand sqlCommand = new SqlCommand("AddToCart", sqlConnection);
+            //Retunera antalet rader som ändrats
+            int result = 0;
+
+            SqlCommand sqlCommand = new SqlCommand("RemoveItemFromCart", sqlConnection);
             sqlCommand.CommandType = CommandType.StoredProcedure;
 
             SqlParameter paramCID = new SqlParameter("@cid", SqlDbType.Int);
-            paramCID.Value = CID;
+            paramCID.Value = cid;
             sqlCommand.Parameters.Add(paramCID);
 
-            SqlParameter paramAID = new SqlParameter("@aid", SqlDbType.Int);
-            paramAID.Value = AID;
-            sqlCommand.Parameters.Add(paramAID);
-
             SqlParameter paramID = new SqlParameter("@id", SqlDbType.Int);
-            paramID.Direction = ParameterDirection.Output;
+            paramID.Value = id;
             sqlCommand.Parameters.Add(paramID);
 
             try
             {
                 sqlConnection.Open();
 
-                sqlCommand.ExecuteNonQuery();
+                result = sqlCommand.ExecuteNonQuery();
 
-                int id = int.Parse(paramID.Value.ToString());
-
-                newArticelToCart = new ShoppingCart(id, CID, AID);
             }
             catch (Exception ex)
             {
@@ -151,7 +193,98 @@ namespace SQLLibraryKontorsPrylarAB
                 sqlConnection.Close();
             }
 
-            return newArticelToCart;
+            return result;
+        }
+
+        public List<ShoppingCart> ReadCart(int cid)
+        {
+            List<ShoppingCart> cart = new List<ShoppingCart>();
+
+            SqlCommand sqlCommand = new SqlCommand("ReadCart", sqlConnection);
+            sqlCommand.CommandType = CommandType.StoredProcedure;
+
+            SqlParameter paramCID = new SqlParameter("@cid", SqlDbType.Int);
+            paramCID.Value = cid;
+            sqlCommand.Parameters.Add(paramCID);
+
+            try
+            {
+                sqlConnection.Open();
+
+                SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+
+                while (sqlDataReader.Read())
+                {
+                    string articleName = sqlDataReader["articleName"].ToString();
+                    string description = sqlDataReader["description"].ToString();
+                    int price = Convert.ToInt32(sqlDataReader["price"]);
+                    int aid = Convert.ToInt32(sqlDataReader["aid"]);
+                    int id = Convert.ToInt32(paramCID.Value);
+                    cart.Add(new ShoppingCart(id, cid, aid, articleName, description, price));
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+
+            return cart;
+        }
+
+        public int AddArticleToCart(int CID, Article articleToCart)
+        {
+            int result = 0;
+            SqlCommand sqlCommand = new SqlCommand("AddToCart", sqlConnection);
+            sqlCommand.CommandType = CommandType.StoredProcedure;
+
+            SqlParameter paramCID = new SqlParameter("@cid", SqlDbType.Int);
+            paramCID.Value = CID;
+            sqlCommand.Parameters.Add(paramCID);
+
+            SqlParameter paramAID = new SqlParameter("@aid", SqlDbType.Int);
+            paramAID.Value = articleToCart.ID1;
+            sqlCommand.Parameters.Add(paramAID);
+
+            SqlParameter paramArticleName = new SqlParameter("@articleName", SqlDbType.VarChar);
+            paramArticleName.Value = articleToCart.ArticleName;
+            sqlCommand.Parameters.Add(paramArticleName);
+
+            SqlParameter paramPrice = new SqlParameter("@price", SqlDbType.Int);
+            paramPrice.Value = articleToCart.Price;
+            sqlCommand.Parameters.Add(paramPrice);
+
+            SqlParameter paramDescription = new SqlParameter("@description", SqlDbType.VarChar);
+            paramDescription.Value = articleToCart.Description;
+            sqlCommand.Parameters.Add(paramDescription);
+            
+            SqlParameter paramID = new SqlParameter("@id", SqlDbType.Int);
+            paramID.Direction = ParameterDirection.Output;
+            sqlCommand.Parameters.Add(paramID);
+
+            try
+            {
+                sqlConnection.Open();
+
+                result = sqlCommand.ExecuteNonQuery();
+                
+                //int id = int.Parse(paramID.Value.ToString());
+                //newArticelToCart = new ShoppingCart(id, CID, articleToCart.ID1, articleToCart.ArticleName, articleToCart.Description, articleToCart.Price);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+
+            return result;
         }
 
         public Article AddArticle(string articleName, string description, int price)
@@ -229,32 +362,33 @@ namespace SQLLibraryKontorsPrylarAB
             return result;
         }
 
-        public void UpdateArticle(Article updatedArticle)
+        public int UpdateArticle(int aid, string articleName, string description, int price)
         {
+            int result = 0;
             SqlCommand sqlCommand = new SqlCommand("UpdateArticle", sqlConnection);
             sqlCommand.CommandType = CommandType.StoredProcedure;
 
             SqlParameter paramAID = new SqlParameter("@aid", SqlDbType.Int);
-            paramAID.Value = updatedArticle.ID1;
+            paramAID.Value = aid;
             sqlCommand.Parameters.Add(paramAID);
 
-            SqlParameter paramArticleName = new SqlParameter("@articleName", SqlDbType.VarChar);
-            paramArticleName.Value = updatedArticle.ArticleName;
+            SqlParameter paramArticleName = new SqlParameter("@newArticleName", SqlDbType.VarChar);
+            paramArticleName.Value = articleName;
             sqlCommand.Parameters.Add(paramArticleName);
 
-            SqlParameter paramPrice = new SqlParameter("@price", SqlDbType.Int);
-            paramPrice.Value = updatedArticle.Price;
-            sqlCommand.Parameters.Add(paramPrice);
-
-            SqlParameter paramDescription = new SqlParameter("@description", SqlDbType.VarChar);
-            paramDescription.Value = updatedArticle.Description;
+            SqlParameter paramDescription = new SqlParameter("@newArticleDescription", SqlDbType.VarChar);
+            paramDescription.Value = description;
             sqlCommand.Parameters.Add(paramDescription);
+
+            SqlParameter paramPrice = new SqlParameter("@newArticlePrice", SqlDbType.Int);
+            paramPrice.Value = price;
+            sqlCommand.Parameters.Add(paramPrice);
 
             try
             {
                 sqlConnection.Open();
 
-                sqlCommand.ExecuteNonQuery();
+                result = sqlCommand.ExecuteNonQuery();
 
             }
             catch (Exception ex)
@@ -266,6 +400,7 @@ namespace SQLLibraryKontorsPrylarAB
                 sqlConnection.Close();
             }
 
+            return result;
         }
 
         public Customer RegisterCustomer(string userName, string eMail, string password, string deliveryCity, string deliveryStreet)
