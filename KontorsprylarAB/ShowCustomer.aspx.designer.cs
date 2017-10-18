@@ -10,87 +10,69 @@
 namespace KontorsprylarAB {
     
     
-    public partial class Main {
+    public partial class ShowCustomer {
         
         /// <summary>
-        /// head control.
+        /// LabelStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
+        protected global::System.Web.UI.WebControls.Label LabelStatus;
         
         /// <summary>
-        /// HyperLinkAccount control.
+        /// textboxUserName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink HyperLinkAccount;
+        protected global::System.Web.UI.WebControls.TextBox textboxUserName;
         
         /// <summary>
-        /// HyperLinkLoginState control.
+        /// textboxEmail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink HyperLinkLoginState;
+        protected global::System.Web.UI.WebControls.TextBox textboxEmail;
         
         /// <summary>
-        /// form1 control.
+        /// textboxPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.TextBox textboxPassword;
         
         /// <summary>
-        /// ViewArticles control.
+        /// textboxStreet control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ViewArticles;
+        protected global::System.Web.UI.WebControls.TextBox textboxStreet;
         
         /// <summary>
-        /// ViewDetails control.
+        /// textboxCity control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ViewDetails;
+        protected global::System.Web.UI.WebControls.TextBox textboxCity;
         
         /// <summary>
-        /// ViewCart control.
+        /// buttonSubmitCustomer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ViewCart;
-        
-        /// <summary>
-        /// ViewLogin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ViewLogin;
-        
-        /// <summary>
-        /// Content_Customer control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder Content_Customer;
+        protected global::System.Web.UI.WebControls.Button buttonSubmitCustomer;
     }
 }

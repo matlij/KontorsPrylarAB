@@ -13,24 +13,22 @@
 </head>
 <body>
     <nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">Kontorsprylar AB</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="index.aspx">Hem</a></li>
-      <li><a href="showCart.aspx">Varukorg</a></li>
-      <li><a href="showArticle.aspx?action=Update&aid=5">Update contact</a></li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-        <asp:HyperLink ID="HyperLink1" runat="server">HyperLink</asp:HyperLink>
-
-
-      <li><a href="#"><span class="glyphicon glyphicon-user"></span> Registrera användare</a></li>
-      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logga in</a></li>
-    </ul>
-  </div>
-</nav>
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Kontorsprylar AB</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="index.aspx">Hem</a></li>
+                <li><a href="showCart.aspx">Varukorg</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <asp:HyperLink ID="HyperLinkAccount" runat="server"></asp:HyperLink></li>
+                <li>
+                    <asp:HyperLink ID="HyperLinkLoginState" runat="server"></asp:HyperLink></li>
+            </ul>
+        </div>
+    </nav>
     <form id="form1" runat="server">
         <div>
             <asp:ContentPlaceHolder ID="ViewArticles" runat="server">
@@ -39,8 +37,12 @@
             </asp:ContentPlaceHolder>
             <asp:ContentPlaceHolder ID="ViewCart" runat="server">
             </asp:ContentPlaceHolder>
+            <asp:ContentPlaceHolder ID="ViewLogin" runat="server">
+            </asp:ContentPlaceHolder>
+            <asp:ContentPlaceHolder ID="Content_Customer" runat="server">
+            </asp:ContentPlaceHolder>
         </div>
     </form>
-    
+
 </body>
 </html>

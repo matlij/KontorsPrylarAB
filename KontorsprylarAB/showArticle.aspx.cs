@@ -15,11 +15,6 @@ namespace KontorsprylarAB
             SQLStuff Sqlstuff = new SQLStuff();
             //Om man kommit in på detta form genom att klicka redigera, så skaa textboxarna fyllas i av artikelattribut från aktuellt artikelID
 
-            if (Page.IsPostBack)
-            {
-                LabelStatus.Text = "Postback!";
-            }
-
             if (Request["action"] == "Update")
             {
                 int aid = Convert.ToInt32(Request.QueryString.Get("aid"));

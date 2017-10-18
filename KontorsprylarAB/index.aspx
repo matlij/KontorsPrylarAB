@@ -7,7 +7,7 @@
 
     <asp:Label ID="LabelAddToCart" runat="server" Text="" Font-Size="Larger"></asp:Label>
 
-    <table style="width: 40%;" class="table table-striped">
+    <table style="width: 60%;" class="table table-striped">
         <thead>
             <tr>
                 <th>Artikelnummer</th>
@@ -21,6 +21,5 @@
     </table>
 
     <input id="loadButton" type="button" value="Visa artiklar" />
-    <input id="loggIn" type="button" value="Logga in/ut" />
 
 </asp:Content>

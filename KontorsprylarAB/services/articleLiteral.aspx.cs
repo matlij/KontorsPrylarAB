@@ -22,7 +22,7 @@ namespace KontorsprylarAB.services
                 literalArticles.Text = jsonString;
             }
 
-            if (Request["action"] == "readCart")
+            else if (Request["action"] == "readCart")
             {
                 int cid = Convert.ToInt32(Request["cid"]);
 
@@ -31,7 +31,7 @@ namespace KontorsprylarAB.services
                 literalArticles.Text = jsonString;
             }
 
-            if (Request["action"] == "addToCart")
+            else if (Request["action"] == "addToCart")
             {
                 SQLStuff stuffSQL = new SQLStuff();
                 int aid = Convert.ToInt32(Request["aid"]);
@@ -47,7 +47,7 @@ namespace KontorsprylarAB.services
                     literalArticles.Text = "error";
             }
 
-            if (Request["action"] == "removeFromCart")
+            else if (Request["action"] == "removeFromCart")
             {
                 int CartID = Convert.ToInt32(Request["CartID"]);
 
@@ -64,6 +64,32 @@ namespace KontorsprylarAB.services
                 {
                     literalArticles.Text = "Error";
                 }
+            }
+
+            else if (Request["action"] == "deleteAID")
+            {
+                int aid = Convert.ToInt32(Request["aid"]);
+
+                int result = sqlStuff.RemoveArticle(aid);
+
+                if (result == 0)
+                {
+                    literalArticles.Text = "error";
+                }
+                else
+                {
+                    literalArticles.Text = "ok";
+                }
+            }
+
+            else if (Request["action"] == "checkUserName")
+            {
+                if (Session["customer"] != null)
+                {
+                    Customer customer = (Customer)Session["customer"];
+                    literalArticles.Text = customer.UserName;
+                }
+
             }
         }
     }

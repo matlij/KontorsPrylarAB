@@ -10,10 +10,11 @@ namespace SQLLibraryKontorsPrylarAB
 {
     public class SQLStuff
     {
-        SqlConnection sqlConnection = new SqlConnection(@"Data Source=.;Initial Catalog=KontorsprylarAB;Integrated Security=True");
-
-        public Customer ValidateUser(string userName, string password)
+        private static SqlConnection sqlConnection = new SqlConnection(@"Data Source=.;Initial Catalog=KontorsprylarAB;Integrated Security=True");
+        
+        public static Customer ValidateUser(string userName, string password)
         {
+
             Customer customerloggedIn = null;
 
             SqlCommand sqlCommand = new SqlCommand("select * from Customer where userName=@userName and password=@password", sqlConnection);
@@ -35,7 +36,7 @@ namespace SQLLibraryKontorsPrylarAB
                 if (sqlDataReader.HasRows)
                 {
                     sqlDataReader.Read();
-                       
+
                     int id = Convert.ToInt32(sqlDataReader["ID"]);
                     userName = sqlDataReader["userName"].ToString();
                     string email = sqlDataReader["email"].ToString();
