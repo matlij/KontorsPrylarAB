@@ -43,42 +43,44 @@ namespace KontorsprylarAB
 
         protected void buttonSubmitCustomer_Click(object sender, EventArgs e)
         {
-            SQLStuff sqlstuff = new SQLStuff();
-            string name = textboxUserName.Text;
-            string email = textboxEmail.Text;
-            string password = textboxPassword.Text;
-            string street = textboxStreet.Text;
-            string city = textboxCity.Text;
-
-
-            if (Request["action"] == "add")
+            if (IsValid)
             {
-                //Lägger till en ny kund i tabellen Customer
-                Customer newCustomer = sqlstuff.RegisterCustomer(name, email, password, street, city);
-                if (newCustomer != null)
+
+                SQLStuff sqlstuff = new SQLStuff();
+                string name = textboxUserName.Text;
+                string email = textboxEmail.Text;
+                string password = textboxPassword.Text;
+                string street = textboxStreet.Text;
+                string city = textboxCity.Text;
+
+                if (Request["action"] == "add")
                 {
-                    LabelStatus.Text = "Grattis! Du är nu registrerad som kund hos Kontorsprylar AB!";
+                    //Lägger till en ny kund i tabellen Customer
+                    Customer newCustomer = sqlstuff.RegisterCustomer(name, email, password, street, city);
+                    if (newCustomer != null)
+                    {
+                        LabelStatus.Text = "Grattis! Du är nu registrerad som kund hos Kontorsprylar AB!";
+                    }
+
+                    textboxUserName.Text = "";
+                    textboxEmail.Text = "";
+                    textboxPassword.Text = "";
+                    textboxStreet.Text = "";
+                    textboxCity.Text = "";
                 }
 
-                textboxUserName.Text = "";
-                textboxEmail.Text = "";
-                textboxPassword.Text = "";
-                textboxStreet.Text = "";
-                textboxCity.Text = "";
-            }
-
-            else if (Request["action"] == "update")
-            {
-                int cid = Convert.ToInt32(Request.QueryString.Get("cid"));
-                int result = 0;
-                result = sqlstuff.UpdateCustomer(cid, name, email, password, street, city); //Lägg till denna metod i sqlLibrary
-
-                if (result > 0)
+                else if (Request["action"] == "update")
                 {
-                    LabelStatus.Text = "Du har nu uppdaterat dina uppgifter";
+                    int cid = Convert.ToInt32(Request.QueryString.Get("cid"));
+                    int result = 0;
+                    result = sqlstuff.UpdateCustomer(cid, name, email, password, street, city); //Lägg till denna metod i sqlLibrary
+
+                    if (result > 0)
+                    {
+                        LabelStatus.Text = "Du har nu uppdaterat dina uppgifter";
+                    }
                 }
             }
-
         }
     }
 }

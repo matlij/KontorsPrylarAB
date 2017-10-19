@@ -29,8 +29,8 @@ create table Customer
 	deliveryStreet varchar(max) not null,
 	deliveryCity varchar(max) not null
 )
-go
 
+go
 create table [Order]
 (
 	id int identity (1,1) primary key not null,

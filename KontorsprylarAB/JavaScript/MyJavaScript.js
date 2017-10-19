@@ -14,6 +14,11 @@ $(document).ready(function () {
     $("#buttonConfirmOrder").click(function () {
         ConfirmOrder1();
     });
+
+    $("#indexPic").click(function () {
+        $("#indexPic").fadeOut();
+        $("#indexWelcomeText").html("Prylar för produktiva proffs.");
+    });
     
 });
 
@@ -59,6 +64,7 @@ function LoadArticles() {
         }
         else {
             LoadArticles2(0);
+            $("#LabelAddToCart").val("Prylar för produktiva proffs");
         }
     });
 }
@@ -75,7 +81,7 @@ function LoadArticles2(userType) {
             tableRow += "<td>" + theArticles[i].ID1 + "</td>";
             tableRow += "<td>" + theArticles[i].ArticleName + "</td>";
             tableRow += "<td>" + theArticles[i].Description + "</td>";
-            tableRow += "<td>" + theArticles[i].Price + "</td>";
+            tableRow += "<td>" + theArticles[i].Price + " :-</td>";
 
             if (userType == 1) {
                 tableRow += "<td><input type='button' value='Ändra' onclick='UpdateArticle(" + theArticles[i].ID1 + ");'/></td>";
@@ -150,7 +156,7 @@ function LoadCart2(cid) {
             tableRow += "<td>" + theCart[i].AID1 + "</td>";
             tableRow += "<td>" + theCart[i].ArticleName + "</td>";
             tableRow += "<td>" + theCart[i].Description + "</td>";
-            tableRow += "<td>" + theCart[i].Price + "</td>";
+            tableRow += "<td>" + theCart[i].Price + " :-</td>";
 
             tableRow += "<td><input type='button' value='Radera' onclick='removeItemFromCart(" + theCart[i].ID1 + ");' /></td>";
             tableRow += "</tr>";

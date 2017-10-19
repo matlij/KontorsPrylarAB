@@ -40,6 +40,15 @@ namespace KontorsprylarAB {
         protected global::System.Web.UI.WebControls.TextBox textboxUserName;
         
         /// <summary>
+        /// RequiredFieldValidatorUserName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidatorUserName;
+        
+        /// <summary>
         /// textboxEmail control.
         /// </summary>
         /// <remarks>
@@ -47,6 +56,15 @@ namespace KontorsprylarAB {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox textboxEmail;
+        
+        /// <summary>
+        /// RequiredFieldValidatorMail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidatorMail;
         
         /// <summary>
         /// textboxPassword control.
@@ -58,6 +76,15 @@ namespace KontorsprylarAB {
         protected global::System.Web.UI.WebControls.TextBox textboxPassword;
         
         /// <summary>
+        /// RequiredFieldValidatorPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidatorPassword;
+        
+        /// <summary>
         /// textboxStreet control.
         /// </summary>
         /// <remarks>
@@ -67,6 +94,15 @@ namespace KontorsprylarAB {
         protected global::System.Web.UI.WebControls.TextBox textboxStreet;
         
         /// <summary>
+        /// RequiredFieldValidatorStreet control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidatorStreet;
+        
+        /// <summary>
         /// textboxCity control.
         /// </summary>
         /// <remarks>
@@ -74,6 +110,15 @@ namespace KontorsprylarAB {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox textboxCity;
+        
+        /// <summary>
+        /// RequiredFieldValidatorCity control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidatorCity;
         
         /// <summary>
         /// buttonSubmitCustomer control.
