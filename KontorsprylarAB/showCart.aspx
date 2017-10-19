@@ -43,10 +43,7 @@
 
     <table>
         <tr>
-            <td>
-                <input type="button" value="Makulera order" id="buttonDeleteOrder" /></td>
-            <td>
-                <input type="button" value="Bekräfta order" id="buttonConfirmOrder" /></td>
+            <td><input type="button" value="Bekräfta order" id="buttonConfirmOrder" /></td>
         </tr>
     </table>
 

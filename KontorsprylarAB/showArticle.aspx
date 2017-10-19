@@ -4,6 +4,9 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ViewDetails" runat="server">
     <h2 id="articleform_h2"></h2>
+
+    <asp:Label ID="LabelProductPage" runat="server" Text="" Font-Size="X-Large"></asp:Label>
+    <br />
     <asp:Label ID="LabelStatus" runat="server" Text="" Font-Size="X-Large"></asp:Label>
     <div class="form-group">
         <label for="textboxArtName" style="font-size: large">Artikelnamn:</label>

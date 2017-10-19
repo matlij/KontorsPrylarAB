@@ -22,8 +22,8 @@ namespace KontorsprylarAB
             if (Session["customer"] == null)
             {
                 HyperLinkAccount.Text = "<span class=\"glyphicon glyphicon-user\">&nbsp;Registrera kund</span>";
-                HyperLinkAccount.ToolTip = "Klicka här för att registrera en ny kund";
-                HyperLinkAccount.NavigateUrl = "#";
+                HyperLinkAccount.ToolTip = "Klicka här för att registrera dig som kund";
+                HyperLinkAccount.NavigateUrl = "/showCustomer.aspx?action=add";
 
                 HyperLinkLoginState.Text = "<span class=\"glyphicon glyphicon-log-in\">&nbsp;Logga in</span>";
                 HyperLinkLoginState.ToolTip = "Klicka här för att logga in";
@@ -34,13 +34,12 @@ namespace KontorsprylarAB
                 customer = (Customer)Session["customer"];
 
                 HyperLinkAccount.Text = "<span class=\"glyphicon glyphicon-user\">&nbsp;" + customer.UserName + "</span>";
-                //HyperLinkAccount.ToolTip = "Inloggad som " + customer.UserName;
-                HyperLinkAccount.ToolTip = customer.UserName + ", " + customer.DeliveryStreet + ", " + customer.DeliveryCity;
-                HyperLinkAccount.NavigateUrl = "#";
+                HyperLinkAccount.ToolTip = "Inloggad som " + customer.UserName;
+                HyperLinkAccount.NavigateUrl = "/showCustomer.aspx?action=update&cid=" + customer.ID1;
 
                 HyperLinkLoginState.Text = "<span class=\"glyphicon glyphicon-log-out\">&nbsp;Logga ut</span>";
                 HyperLinkLoginState.ToolTip = "Klicka här för att logga ut";
-                HyperLinkLoginState.NavigateUrl = "/index.aspx";
+                HyperLinkLoginState.NavigateUrl = "/index.aspx?logout=true";
             }
         }
     }

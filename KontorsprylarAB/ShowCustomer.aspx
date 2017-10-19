@@ -6,30 +6,10 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="Content_Customer" runat="server">
 
-
-    <h1>Din sida</h1>
-
-    <asp:Label ID="LabelCustomerPage" runat="server" Text="" Font-Size="Larger"></asp:Label>
-
-    <table style="width: 60%;" class="table table-striped">
-        <thead>
-            <tr>
-                <th>Ordernr</th>
-                <th>Artikelnummer</th>
-                <th>Artikel</th>
-                <th>Beskrivning</th>
-                <th>Pris</th>
-            </tr>
-        </thead>
-        <tbody id="myTbOrderHistory">
-        </tbody>
-    </table>
-
-    <input id="loadButtonOrderHistory" type="button" value="Visa orderhistorik" />
-
-    <h2 id="customerform_h2"></h2>
-    <asp:Label ID="LabelStatus" runat="server" Text="Label"></asp:Label>
-
+    <asp:Label ID="customerform_h2" runat="server" Text="" Font-Size="X-Large" Font-Bold="True"></asp:Label>
+    <br />
+    <asp:Label ID="LabelStatus" runat="server" Text=""></asp:Label>
+    <br />
     <div class="form-group">
         <label for="textboxUserName" style="font-size: large">Användarnamn:</label>
         <br />
@@ -55,7 +35,7 @@
     </div>
 
     <div class="form-group">
-        <label for="textboxCity" style="font-size: large">Postord:</label>
+        <label for="textboxCity" style="font-size: large">Postort:</label>
         <br />
         <asp:TextBox ID="textboxCity" runat="server" Font-Size="Large" Width="290px" BackColor="#FFE0C1" Height="24px"></asp:TextBox>
     </div>
@@ -63,7 +43,7 @@
     <br />
 
     <%--    Knapp för att submitta ändringar/lägga till--%>
-    <asp:Button ID="buttonSubmitCustomer" runat="server" Text="OK" OnClick="buttonSubmitCustomer_Click" Font-Size="X-Large" Height="49px" Width="101px" BackColor="#FF9999" BorderStyle="Double" Font-Bold="True" />
+    <asp:Button ID="buttonSubmitCustomer" runat="server" Text="SPARA" OnClick="buttonSubmitCustomer_Click" Font-Size="X-Large" Height="49px" Width="101px" BackColor="#FF9999" BorderStyle="Double" Font-Bold="True" />
 
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ViewDetails" runat="server">

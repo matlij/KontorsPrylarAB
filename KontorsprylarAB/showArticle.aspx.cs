@@ -17,6 +17,7 @@ namespace KontorsprylarAB
 
             if (Request["action"] == "Update")
             {
+                LabelProductPage.Text = "Uppdatera Artikel";
                 int aid = Convert.ToInt32(Request.QueryString.Get("aid"));
                 if (Request["aid"] != null)
                 {
@@ -28,6 +29,12 @@ namespace KontorsprylarAB
                         textboxArtPrice.Text = article.Price.ToString();
                     }
                 }
+
+            }
+
+            else if (Request["action"] == "Add")
+            {
+                LabelProductPage.Text = "Lägg till ny artikel";
             }
         }
 
@@ -57,7 +64,8 @@ namespace KontorsprylarAB
 
                 if (result > 0)
                 {
-                    LabelStatus.Text = $"Artikelnr {aid}: {name} uppdaterad";
+                    Response.Redirect("/index.aspx");
+                    //LabelStatus.Text = $"Artikelnr {aid}: {name} uppdaterad";
                 }
             }
 

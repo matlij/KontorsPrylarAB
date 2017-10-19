@@ -113,6 +113,34 @@ namespace KontorsprylarAB.services
                 }
 
             }
+
+            else if (Request["action"] == "newOrder")
+            {
+                int cid = Convert.ToInt32(Request["cid"]);
+
+                Order newOrder = sqlStuff.RegisterOrder(cid);
+
+                if (newOrder != null)
+                {
+
+                    List<ShoppingCart> shoppingCart = sqlStuff.ReadCart(cid);
+                    foreach (var cartItem in shoppingCart)
+                    {
+                        int aid = cartItem.AID1;
+                        int oid = newOrder.ID1;
+                        sqlStuff.AddArticleToOrder(oid, aid);
+                    }
+
+                    sqlStuff.EmptyCart(cid);
+                    literalArticles.Text = "Hurra!!!";
+                }
+
+                else
+                {
+                    literalArticles.Text = "Error";
+                }
+
+            }
         }
     }
 }

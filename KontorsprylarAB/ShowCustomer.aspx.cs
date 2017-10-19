@@ -15,10 +15,11 @@ namespace KontorsprylarAB
 
             SQLStuff Sqlstuff = new SQLStuff();
             //Om man kommit in på detta form genom att klicka redigera, så skaa textboxarna fyllas i av artikelattribut från aktuellt artikelID
-            
 
-            if (Request["action"] == "Update")
+            if (Request["action"] == "update")
             {
+                customerform_h2.Text = "Uppdatera dina uppgifter";
+
                 int cid = Convert.ToInt32(Request.QueryString.Get("cid"));
                 if (Request["cid"] != null)
                 {
@@ -33,6 +34,11 @@ namespace KontorsprylarAB
                     }
                 }
             }
+
+            else if (Request["action"] == "add")
+            {
+                customerform_h2.Text = "Registrera dig som kund";
+            }
         }
 
         protected void buttonSubmitCustomer_Click(object sender, EventArgs e)
@@ -45,21 +51,27 @@ namespace KontorsprylarAB
             string city = textboxCity.Text;
 
 
-            if (Request["action"] == "Add")
+            if (Request["action"] == "add")
             {
                 //Lägger till en ny kund i tabellen Customer
-                Customer newCustomer = sqlstuff.RegisterCustomer(name, email, password, city, street);
+                Customer newCustomer = sqlstuff.RegisterCustomer(name, email, password, street, city);
                 if (newCustomer != null)
                 {
                     LabelStatus.Text = "Grattis! Du är nu registrerad som kund hos Kontorsprylar AB!";
                 }
+
+                textboxUserName.Text = "";
+                textboxEmail.Text = "";
+                textboxPassword.Text = "";
+                textboxStreet.Text = "";
+                textboxCity.Text = "";
             }
 
-            else if (Request["action"] == "Update")
+            else if (Request["action"] == "update")
             {
                 int cid = Convert.ToInt32(Request.QueryString.Get("cid"));
                 int result = 0;
-                //result = sqlstuff.UpdateCustomer(); //Lägg till denna metod i sqlLibrary
+                result = sqlstuff.UpdateCustomer(cid, name, email, password, street, city); //Lägg till denna metod i sqlLibrary
 
                 if (result > 0)
                 {

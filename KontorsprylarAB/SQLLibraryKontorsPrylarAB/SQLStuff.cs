@@ -14,7 +14,6 @@ namespace SQLLibraryKontorsPrylarAB
         
         public static Customer ValidateUser(string userName, string password)
         {
-
             Customer customerloggedIn = null;
 
             SqlCommand sqlCommand = new SqlCommand("select * from Customer where userName=@userName and password=@password", sqlConnection);
@@ -201,7 +200,6 @@ namespace SQLLibraryKontorsPrylarAB
 
             return orderHistory;
         }
-
 
         public int RemoveItemFromCart(int cid, int id)
         {
@@ -445,7 +443,7 @@ namespace SQLLibraryKontorsPrylarAB
             return result;
         }
 
-        public Customer RegisterCustomer(string userName, string eMail, string password, string deliveryCity, string deliveryStreet)
+        public Customer RegisterCustomer(string userName, string eMail, string password, string deliveryStreet, string deliveryCity)
         {
             Customer newCustomer;
             SqlCommand sqlCommand = new SqlCommand("RegisterCustomer", sqlConnection);
@@ -483,7 +481,7 @@ namespace SQLLibraryKontorsPrylarAB
 
                 int id = int.Parse(paramCID.Value.ToString());
 
-                newCustomer = new Customer(id, userName, eMail, password, deliveryCity, deliveryStreet);
+                newCustomer = new Customer(id, userName, eMail, password, deliveryStreet, deliveryCity);
             }
             catch (Exception ex)
             {
@@ -567,5 +565,86 @@ namespace SQLLibraryKontorsPrylarAB
 
             return result;
         }
+
+        public int EmptyCart(int cid)
+        {
+            //Retunera antalet rader som ändrats
+            int result = 0;
+
+            SqlCommand sqlCommand = new SqlCommand("EmptyCart", sqlConnection);
+            sqlCommand.CommandType = CommandType.StoredProcedure;
+
+            SqlParameter paramCID = new SqlParameter("@cid", SqlDbType.Int);
+            paramCID.Value = cid;
+            sqlCommand.Parameters.Add(paramCID);
+
+            try
+            {
+                sqlConnection.Open();
+
+                result = sqlCommand.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+
+            return result;
+        }
+
+        public int UpdateCustomer(int cid, string userName, string eMail, string password, string street, string city)
+        {
+            int result = 0;
+            SqlCommand sqlCommand = new SqlCommand("UpdateCustomer", sqlConnection);
+            sqlCommand.CommandType = CommandType.StoredProcedure;
+
+            SqlParameter paramCID = new SqlParameter("@cid", SqlDbType.Int);
+            paramCID.Value = cid;
+            sqlCommand.Parameters.Add(paramCID);
+
+            SqlParameter paramUserName = new SqlParameter("@newUserName", SqlDbType.VarChar);
+            paramUserName.Value = userName;
+            sqlCommand.Parameters.Add(paramUserName);
+
+            SqlParameter paramEmail = new SqlParameter("@newEmail", SqlDbType.VarChar);
+            paramEmail.Value = eMail;
+            sqlCommand.Parameters.Add(paramEmail);
+
+            SqlParameter paramPassword = new SqlParameter("@newPassword", SqlDbType.VarChar);
+            paramPassword.Value = password;
+            sqlCommand.Parameters.Add(paramPassword);
+
+            SqlParameter paramStreet = new SqlParameter("@newStreet", SqlDbType.VarChar);
+            paramStreet.Value = street;
+            sqlCommand.Parameters.Add(paramStreet);
+
+            SqlParameter paramCity = new SqlParameter("@newCity", SqlDbType.VarChar);
+            paramCity.Value = city;
+            sqlCommand.Parameters.Add(paramCity);
+
+            try
+            {
+                sqlConnection.Open();
+
+                result = sqlCommand.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+
+            return result;
+        }
+
     }
 }

@@ -1,8 +1,7 @@
 ﻿
 $(document).ready(function () {
-    $("#loadButton").click(function () {
-        CheckUserName();
-    });
+
+    LoadArticles();
 
     $("#buttonShowCart").click(function () {
         LoadCart();
@@ -10,6 +9,10 @@ $(document).ready(function () {
 
     $("#loadButtonOrderHistory").click(function () {
         LoadOrderHistory();
+    });
+
+    $("#buttonConfirmOrder").click(function () {
+        ConfirmOrder1();
     });
     
 });
@@ -44,24 +47,23 @@ function LoadOrderHistory2(cid) {
     });
 }
 
-
-function CheckUserName() {
+function LoadArticles() {
     $.get("/services/articleLiteral.aspx?action=checkUserName").done(function (theUserName) {
 
         //If user is admin
         if (theUserName.trim() == "admin") {
-            LoadArticles(1);
+            LoadArticles2(1);
         }
         else if (theUserName.trim().length > 0) {
-            LoadArticles(2);
+            LoadArticles2(2);
         }
         else {
-            LoadArticles(0);
+            LoadArticles2(0);
         }
     });
 }
 
-function LoadArticles(userType) {
+function LoadArticles2(userType) {
 
     $.getJSON("/services/articleLiteral.aspx?action=loadArticles").done(function (theArticles) {
         $("#myTableBody").empty();
@@ -81,7 +83,7 @@ function LoadArticles(userType) {
             }
 
             else if (userType == 2) {
-                tableRow += "<td><input type='button' value='Köp' onclick='addItemToCart(" + theArticles[i].ID1 + ");' /></td>";
+                tableRow += "<td><input type='button' value='Lägg till i varukorg' onclick='addItemToCart(" + theArticles[i].ID1 + ");' /></td>";
             }
             tableRow += "</tr>";
 
@@ -107,7 +109,7 @@ function DeleteArticle(aid) {
     $.get("/services/articleLiteral.aspx?action=deleteAID&aid=" + aid).
         done(function (data) {
             if (data.trim() == "ok") {
-                CheckUserName();
+                LoadArticles();
             }
         });
 }
@@ -172,7 +174,6 @@ function addItemToCart(aid) {
 function addItemToCart2(aid, cid) {
 
     $.get("/services/articleLiteral.aspx?action=addToCart&cid=" + cid + "&aid=" + aid).done(function (cartItem) {
-        console.log(cartItem);
 
         if (cartItem.trim() == "ok")
             alert("Produkt tillagd!")
@@ -181,4 +182,25 @@ function addItemToCart2(aid, cid) {
     });
 }
 
+function ConfirmOrder1() {
 
+    $.get("/services/articleLiteral.aspx?action=checkCustomerID").done(function (theCustomerID) {
+        var cid = theCustomerID.trim();
+        ConfirmOrder2(cid);
+    });
+}
+
+function ConfirmOrder2(cid) {
+
+    $.get("/services/articleLiteral.aspx?action=newOrder&cid=" + cid).done(function (data) {
+        if (data.trim() == "Hurra!!!") {
+            alert("Ditt köp har genomförts");
+            LoadCart();
+        }
+        else {
+            alert("Fel");
+        }
+
+    });
+
+}

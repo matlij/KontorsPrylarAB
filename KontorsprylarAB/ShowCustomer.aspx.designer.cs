@@ -13,13 +13,13 @@ namespace KontorsprylarAB {
     public partial class ShowCustomer {
         
         /// <summary>
-        /// LabelCustomerPage control.
+        /// customerform_h2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelCustomerPage;
+        protected global::System.Web.UI.WebControls.Label customerform_h2;
         
         /// <summary>
         /// LabelStatus control.

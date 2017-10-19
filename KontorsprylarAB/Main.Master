@@ -18,9 +18,9 @@
                 <a class="navbar-brand" href="#">Kontorsprylar AB</a>
             </div>
             <ul class="nav navbar-nav" id="menuBar">
-                <li><a href="index.aspx">Hem</a></li>
+                <li><a href="index.aspx">Sortiment</a></li>
                 <li><a href="showCart.aspx">Varukorg</a></li>
-                <li><a href="showCustomer.aspx">Min sida</a></li>
+                <li><a href="OrderHistory.aspx">Orderhistorik</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>

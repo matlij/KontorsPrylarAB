@@ -208,3 +208,33 @@ as begin
 	Article.id = ArticleToOrder.aid and
 	[order].cid = 2
 end
+
+GO
+create procedure EmptyCart
+	@cid int
+as begin 
+	delete from ShoppingCart where 
+	cid = @cid
+end
+
+GO
+create procedure UpdateCustomer
+@cid int,
+@newUserName varchar(MAX),
+@newEmail varchar(MAX),
+@newPassword varchar(MAX),
+@newStreet varchar(MAX),
+@newCity varchar(MAX)
+
+as
+begin
+update Customer
+set userName=case when len(@newUserName)>0 then @newUserName else userName end,
+    email=case when len(@newEmail)>0 then @newEmail else email end,
+    [password]=case when len(@newPassword)>0 then @newPassword else [password] end,
+    deliveryStreet=case when len(@newStreet)>0 then @newStreet else deliveryStreet end,
+deliveryCity=case when len(@newCity)>0 then @newCity else deliveryCity end
+
+    where ID=@cid
+
+end
