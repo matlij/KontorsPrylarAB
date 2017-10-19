@@ -89,8 +89,6 @@ as begin
 	select * from ShoppingCart where cid = @cid
 end
 
-
-
 GO
 create procedure RegisterCustomer
 	@userName varchar(Max),
@@ -166,28 +164,6 @@ update Article
 end
 
 GO
-create procedure UpdateCustomer
-@cid int,
-@newUserName varchar(MAX),
-@newEmail varchar(MAX),
-@newPassword varchar(MAX),
-@newStreet varchar(MAX),
-@newCity varchar(MAX)
-
-as
-begin
-update Contact
-set userName=case when len(@newUserName)>0 then @newUserName else userName end,
-    email=case when len(@newEmail)>0 then @newEmail else email end,
-    [password]=case when len(@newPassword)>0 then @newPassword else [password] end,
-    deliveryStreet=case when len(@newStreet)>0 then @newStreet else deliveryStreet end,
-deliveryCity=case when len(@newCity)>0 then @newCity else deliveryCity end
-
-    where ID=@cid
-
-end
-
-GO
 declare @cid int
 execute RegisterCustomer 'admin', 'admind@mail.com', 'admin', 'adminStreet', 'adminCity', @cid output
 go
@@ -212,5 +188,23 @@ declare @aid int
 execute AddArticle 'Kaffeautomat', '12000', 'Hjärtat på varje arbetsplats, kaffeautomaten.', @aid output
 go
 
+select * from [order]
+select * from ArticleToOrder
 select * from Article
+select * from ShoppingCart
 select * from Customer
+
+declare @oid int
+execute RegisterOrder 3, @oid output
+execute AddArticleToOrder 2, 4
+
+
+GO
+create procedure ReadAllOrdersFromCID
+	@cid int
+as begin
+	select * from [order], Article, ArticleToOrder where
+	[order].id = ArticleToOrder.oid and
+	Article.id = ArticleToOrder.aid and
+	[order].cid = 2
+end
