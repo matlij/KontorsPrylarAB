@@ -45,7 +45,7 @@ namespace KontorsprylarAB
                 Article newArticle = sqlstuff.AddArticle(name, description, price);
                 if (newArticle != null)
                 {
-                    LabelStatus.Text = "Ny produkt tillagd!";
+                    LabelStatus.Text = $"Ny artikel {name} tillagd";
                 }
             }
 
@@ -57,7 +57,7 @@ namespace KontorsprylarAB
 
                 if (result > 0)
                 {
-                    LabelStatus.Text = "Produkt uppdaterad";
+                    LabelStatus.Text = $"Artikelnr {aid}: {name} uppdaterad";
                 }
             }
 

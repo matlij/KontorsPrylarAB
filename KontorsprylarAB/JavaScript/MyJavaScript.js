@@ -1,6 +1,5 @@
 ﻿
 $(document).ready(function () {
-
     $("#loadButton").click(function () {
         CheckUserName();
     });
@@ -8,7 +7,43 @@ $(document).ready(function () {
     $("#buttonShowCart").click(function () {
         LoadCart();
     });
+
+    $("#loadButtonOrderHistory").click(function () {
+        LoadOrderHistory();
+    });
+    
 });
+
+function LoadOrderHistory() {
+    $.get("/services/articleLiteral.aspx?action=checkCustomerID").done(function (theCustomerID) {
+        var cid = theCustomerID.trim();
+        LoadOrderHistory2(cid);
+    });
+}
+
+function LoadOrderHistory2(cid) {
+
+    $.getJSON("/services/articleLiteral.aspx?action=readOrderHistory&cid=" + cid).done(function (theOrderHistory) {
+
+        console.log(theOrderHistory);
+
+        $("#myTbOrderHistory").empty();
+
+        for (var i = 0; i < theOrderHistory.length; i++) {
+
+            var tableRow = "<tr>";
+            tableRow += "<td>" + theOrderHistory[i].Oid + "</td>";
+            tableRow += "<td>" + theOrderHistory[i].Aid + "</td>";
+            tableRow += "<td>" + theOrderHistory[i].ArticleName + "</td>";
+            tableRow += "<td>" + theOrderHistory[i].Description + "</td>";
+            tableRow += "<td>" + theOrderHistory[i].Price + "</td>";
+            tableRow += "</tr>";
+
+            $("#myTbOrderHistory").append(tableRow);
+        }
+    });
+}
+
 
 function CheckUserName() {
     $.get("/services/articleLiteral.aspx?action=checkUserName").done(function (theUserName) {
@@ -29,7 +64,6 @@ function CheckUserName() {
 function LoadArticles(userType) {
 
     $.getJSON("/services/articleLiteral.aspx?action=loadArticles").done(function (theArticles) {
-        alert("Test");
         $("#myTableBody").empty();
         // Console.Log(theContacts);
 
@@ -42,35 +76,73 @@ function LoadArticles(userType) {
             tableRow += "<td>" + theArticles[i].Price + "</td>";
 
             if (userType == 1) {
-                tableRow += "<td><input type='button' value='Ändra' /></td>";
-                tableRow += "<td><input type='button' value='Ta bort' /></td>";
+                tableRow += "<td><input type='button' value='Ändra' onclick='UpdateArticle(" + theArticles[i].ID1 + ");'/></td>";
+                tableRow += "<td><input type='button' value='Ta bort' onclick='DeleteArticle(" + theArticles[i].ID1 + ");' /></td>";
             }
 
-            if (userType == 2) {
-                tableRow += "<td><input type='button' value='Köp' onclick='addItem(" + theArticles[i].ID1 + ");' /></td>";
+            else if (userType == 2) {
+                tableRow += "<td><input type='button' value='Köp' onclick='addItemToCart(" + theArticles[i].ID1 + ");' /></td>";
             }
             tableRow += "</tr>";
 
             // onclick='addItem(" + theArticles[i].ID1 + ");' 
             $("#myTableBody").append(tableRow);
         }
+        if (userType == 1) {
+            var tableRowAddButton = "<tr><td></td><td></td><td></td><td><input type='button' value='Lägg till produkt' onclick='AddArticle();' /></td></tr>";
+            $("#myTableBody").append(tableRowAddButton);
+        }
     });
+}
 
+function AddArticle() {
+    window.location = "/showArticle.aspx?action=Add";
+}
+
+function UpdateArticle(aid) {
+    window.location = "/showArticle.aspx?action=Update&aid=" + aid;
+}
+
+function DeleteArticle(aid) {
+    $.get("/services/articleLiteral.aspx?action=deleteAID&aid=" + aid).
+        done(function (data) {
+            if (data.trim() == "ok") {
+                CheckUserName();
+            }
+        });
 }
 
 function removeItemFromCart(CartID) {
-    $.get("/services/articleLiteral.aspx?action=removeFromCart&CartID=" + CartID).done(function (result) {
+    $.get("/services/articleLiteral.aspx?action=checkCustomerID").done(function (theCustomerID) {
+        var cid = theCustomerID.trim();
+        removeItemFromCart2(CartID, cid);
+    });
+}
 
+function removeItemFromCart2(CartID, cid) {
+    $.get("/services/articleLiteral.aspx?action=removeFromCart&CartID=" + CartID + "&cid=" + cid).done(function (result) {
+        if (result.trim() == "ok") {
+            LoadCart();
+        }
     });
 }
 
 function LoadCart() {
-    //Kundnr hårdkodat!
-    $.getJSON("/services/articleLiteral.aspx?action=readCart&cid=1").done(function (theCart) {
+    $.get("/services/articleLiteral.aspx?action=checkCustomerID").done(function (theCustomerID) {
+        var cid = theCustomerID.trim();
+        LoadCart2(cid);
+    });
+}
 
-        console.log(theCart);
+function LoadCart2(cid) {
 
+    $.getJSON("/services/articleLiteral.aspx?action=readCart&cid=" + cid).done(function (theCart) {
+
+        $("#CartTableBody").empty();
+        var cartSum = 0;
         for (var i = 0; i < theCart.length; i++) {
+
+            cartSum += theCart[i].Price;
 
             var tableRow = "<tr>";
             tableRow += "<td>" + theCart[i].AID1 + "</td>";
@@ -83,23 +155,23 @@ function LoadCart() {
 
             $("#CartTableBody").append(tableRow);
         }
-
+        $("#SumCart").empty();
+        $("#SumCartInkTax").empty();
+        $("#SumCart").append(cartSum);
+        $("#SumCartInkTax").append(cartSum * 1.25);
     });
 }
 
-function DeleteArticle(aid) {
-    $.get("/services/articleLiteral.aspx?action=deleteAID&aid=" + aid).
-        done(function (data) {
-            if (data.trim() == "ok") {
-                LoadArticles();
-            }
-
-        });
+function addItemToCart(aid) {
+    $.get("/services/articleLiteral.aspx?action=checkCustomerID").done(function (theCustomerID) {
+        var cid = theCustomerID.trim();
+        addItemToCart2(aid, cid);
+    });
 }
 
-function addItem(aid) {
-    //Kundnr hårdkodat!
-    $.get("/services/articleLiteral.aspx?action=addToCart&cid=1&aid=" + aid).done(function (cartItem) {
+function addItemToCart2(aid, cid) {
+
+    $.get("/services/articleLiteral.aspx?action=addToCart&cid=" + cid + "&aid=" + aid).done(function (cartItem) {
         console.log(cartItem);
 
         if (cartItem.trim() == "ok")
@@ -108,4 +180,5 @@ function addItem(aid) {
             alert("Något blev fel")
     });
 }
+
 

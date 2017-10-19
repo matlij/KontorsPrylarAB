@@ -43,6 +43,7 @@
     <Compile Include="Article.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="Order.cs" />
+    <Compile Include="OrderHistory.cs" />
     <Compile Include="ShoppingCart.cs" />
     <Compile Include="SQLStuff.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

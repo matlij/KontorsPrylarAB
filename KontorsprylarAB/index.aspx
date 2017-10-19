@@ -5,6 +5,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ViewArticles" runat="server">
 
+    <h1>Välkommen till Kontorsprylar AB</h1>
+
     <asp:Label ID="LabelAddToCart" runat="server" Text="" Font-Size="Larger"></asp:Label>
 
     <table style="width: 60%;" class="table table-striped">

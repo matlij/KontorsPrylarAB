@@ -31,15 +31,27 @@ namespace KontorsprylarAB.services
                 literalArticles.Text = jsonString;
             }
 
+            else if (Request["action"] == "readOrderHistory")
+            {
+                if (Request["cid"] != null)
+                {
+                    int cid = Convert.ToInt32(Request["cid"]);
+
+                    string jsonString = JsonConvert.SerializeObject(sqlStuff.ReadAllOrdersFromCID(cid));
+
+                    literalArticles.Text = jsonString;
+                }
+            }
+
             else if (Request["action"] == "addToCart")
             {
                 SQLStuff stuffSQL = new SQLStuff();
                 int aid = Convert.ToInt32(Request["aid"]);
+                int cid = Convert.ToInt32(Request["cid"]);
 
                 Article addToCartArticle = sqlStuff.ReadAllArticles().FirstOrDefault(x => x.ID1 == aid);
 
-                //Kundnr är hårdkodat till ID 1, behöver ändras till kund som är inloggad
-                int result = stuffSQL.AddArticleToCart(1, addToCartArticle);
+                int result = stuffSQL.AddArticleToCart(cid, addToCartArticle);
 
                 if (result > 0)
                     literalArticles.Text = "ok";
@@ -50,19 +62,19 @@ namespace KontorsprylarAB.services
             else if (Request["action"] == "removeFromCart")
             {
                 int CartID = Convert.ToInt32(Request["CartID"]);
+                int cid = Convert.ToInt32(Request["cid"]);
 
-                //Kundnr hårdkodat!
-                int result = sqlStuff.RemoveItemFromCart(1, CartID);
+                int result = sqlStuff.RemoveItemFromCart(cid, CartID);
 
                 if (result > 0)
                 {
 
-                    literalArticles.Text = "Hurra!!!";
+                    literalArticles.Text = "ok";
                 }
 
                 else
                 {
-                    literalArticles.Text = "Error";
+                    literalArticles.Text = "error";
                 }
             }
 
@@ -88,6 +100,16 @@ namespace KontorsprylarAB.services
                 {
                     Customer customer = (Customer)Session["customer"];
                     literalArticles.Text = customer.UserName;
+                }
+
+            }
+
+            else if (Request["action"] == "checkCustomerID")
+            {
+                if (Session["customer"] != null)
+                {
+                    Customer customer = (Customer)Session["customer"];
+                    literalArticles.Text = customer.ID1.ToString();
                 }
 
             }

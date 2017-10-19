@@ -162,6 +162,47 @@ namespace SQLLibraryKontorsPrylarAB
             return customers;
         }
 
+        public List<OrderHistory> ReadAllOrdersFromCID(int cid)
+        {
+            List<OrderHistory> orderHistory = new List<OrderHistory>();
+            SqlCommand sqlCommand = new SqlCommand("ReadAllOrdersFromCID", sqlConnection);
+            sqlCommand.CommandType = CommandType.StoredProcedure;
+
+            SqlParameter paramCID = new SqlParameter("@cid", SqlDbType.Int);
+            paramCID.Value = cid;
+            sqlCommand.Parameters.Add(paramCID);
+
+            try
+            {
+                sqlConnection.Open();
+
+                SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+
+                while (sqlDataReader.Read())
+                {
+                    int aid = Convert.ToInt32(sqlDataReader["aid"]);
+                    int oid = Convert.ToInt32(sqlDataReader["oid"]);
+                    string articleName = sqlDataReader["articleName"].ToString();
+                    string description = sqlDataReader["description"].ToString();
+                    int price = Convert.ToInt32(sqlDataReader["price"]);
+
+                    orderHistory.Add(new OrderHistory(aid, oid, articleName, description, price));
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+
+            return orderHistory;
+        }
+
+
         public int RemoveItemFromCart(int cid, int id)
         {
             //Retunera antalet rader som ändrats
@@ -220,7 +261,7 @@ namespace SQLLibraryKontorsPrylarAB
                     string description = sqlDataReader["description"].ToString();
                     int price = Convert.ToInt32(sqlDataReader["price"]);
                     int aid = Convert.ToInt32(sqlDataReader["aid"]);
-                    int id = Convert.ToInt32(paramCID.Value);
+                    int id = Convert.ToInt32(sqlDataReader["id"]);
                     cart.Add(new ShoppingCart(id, cid, aid, articleName, description, price));
                 }
 

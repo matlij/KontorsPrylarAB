@@ -20,17 +20,25 @@
             </tr>
         </thead>
 
-        <tbody id="CartTableBody">
-        </tbody>
         <tfoot>
             <tr>
-                <td>Moms: 25%</td>
-                <td>&nbsp</td>
-                <td>Pris SEK inkl moms: &nbsp</td>
-                <td><textarea id="SumCart" cols="1" rows="1"></textarea></td>
-                <td>&nbsp</td>
+                <th></th>
+                <th></th>
+                <th>Pris SEK EX moms: &nbsp</th>
+                <th><textarea style="width: 85px" id="SumCart" cols="1" rows="1"></textarea></th>
+                <th>&nbsp</th>
+            </tr>
+            <tr>
+                <th></th>
+                <th></th>
+                <th>Pris SEK inkl moms 25%: &nbsp</th>
+                <th><textarea style="width: 85px" id="SumCartInkTax" cols="1" rows="1"></textarea></th>
+                <th>&nbsp</th>
             </tr>
         </tfoot>
+
+        <tbody id="CartTableBody">
+        </tbody>
     </table>
 
     <table>
